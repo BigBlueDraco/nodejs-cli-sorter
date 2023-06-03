@@ -48,6 +48,31 @@ export default class UserData {
       uniqueElements.push(item);
     });
     return uniqueElements || [];
+
+    // Цей ваш штучний інтелект таке запропонував не знаю що краще
+    // const array = ["A", "aaa", "aaa", "123", "123", "4"];
+
+    // // Підрахунок кількості входжень кожного елемента
+    // const count = {};
+    // array.forEach((item) => {
+    //   count[item] = (count[item] || 0) + 1;
+    // });
+
+    // // Сортування масиву за кількістю входжень, а потім за значенням
+    // const sortedArray = array.sort((a, b) => {
+    //   if (count[a] !== count[b]) {
+    //     return count[a] - count[b];
+    //   } else {
+    //     return a.localeCompare(b);
+    //   }
+    // });
+
+    // // Вибір лише унікальних елементів
+    // const uniqueElements = sortedArray.filter((item, index) => {
+    //   return index === sortedArray.indexOf(item);
+    // });
+
+    // console.log(uniqueElements);
   }
 
   getUnique() {
