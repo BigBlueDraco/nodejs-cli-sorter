@@ -1,74 +1,66 @@
-import { select } from "@inquirer/prompts";
+import { createInterface } from "readline";
 export default async function sortOptions(userData) {
   const choices = [
     {
       name: "Sort words alphabetically",
-      value: "0",
+      value() {
+        return userData.getSortedWords();
+      },
     },
 
     {
       name: "Show numbers from lesser to greater",
-      value: "1",
+      value() {
+        return userData.getSortedNumbers();
+      },
     },
 
     {
       name: "Show numbers from bigger to smaller",
-      value: "2",
+      value() {
+        return [...userData.getSortedNumbers()].reverse();
+      },
     },
 
     {
       name: "Display words in ascending order by number of letters in the word",
-      value: "3",
+      value() {
+        return userData.getSortedByLength();
+      },
     },
 
     {
       name: "Show only unique words",
-      value: "4",
+      value() {
+        return userData.getUniqeWords();
+      },
     },
 
     {
       name: "Display only unique values from the set of words and numbers entered by the user",
-      value: "5",
+      value() {
+        return userData.getUnique();
+      },
     },
 
     {
       name: "exit",
-      value: "exit",
+      value() {
+        process.exit(0);
+      },
     },
   ];
+  let rl = createInterface(process.stdin, process.stdout);
 
-  const answers = await select({
-    message: "Choose a sorting option\n",
-    choices: choices,
+  choices.forEach((item, index) => console.log(`${index + 1}: ${item.name}`));
+  return new Promise((resolve, reject) => {
+    rl.question(`Choice sort option: `, (data) => {
+      const stringWitoutSpaces = data.replace(/\s/g, "");
+      if (!isNaN(stringWitoutSpaces)) {
+        console.log(choices[+stringWitoutSpaces - 1].value());
+        rl.close();
+        sortOptions(userData);
+      }
+    });
   });
-  switch (answers) {
-    case choices[0].value: {
-      console.log(userData.getSortedWords());
-      break;
-    }
-    case choices[1].value: {
-      console.log(userData.getSortedNumbers());
-      break;
-    }
-    case choices[2].value: {
-      console.log([...userData.getSortedNumbers()].reverse());
-      break;
-    }
-    case choices[3].value: {
-      console.log(userData.getSortedByLength());
-      break;
-    }
-    case choices[4].value: {
-      console.log(userData.getUniqeWords());
-      break;
-    }
-    case choices[5].value: {
-      console.log(userData.getUnique());
-      break;
-    }
-    case choices[6].value: {
-      process.exit(1);
-    }
-  }
-  sortOptions(userData);
 }

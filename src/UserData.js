@@ -27,6 +27,7 @@ export default class UserData {
   getSortedNumbers() {
     const array = this.getNubers();
     array.sort((a, b) => a - b);
+
     return array || [];
   }
 

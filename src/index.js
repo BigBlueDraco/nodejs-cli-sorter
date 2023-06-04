@@ -3,9 +3,8 @@ import UserData from "./UserData.js";
 import sortOptions from "./sortOtions.js";
 import inputData from "./inputData.js";
 import welcome from "./welcome.js";
-let userData = new UserData();
+const userData = new UserData();
 
 await welcome();
 await inputData(userData);
-
 await sortOptions(userData);
